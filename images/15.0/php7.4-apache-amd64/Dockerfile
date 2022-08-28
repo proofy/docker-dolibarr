@@ -6,7 +6,7 @@ FROM amd64/php:7.4-apache
 # Prepare folders
 RUN set -ex; \
 	apt-get update -q; \
-	apt-get install -y --no-install-recommends \
+	apt-get install -y --no-install-recommends --auto-remove \
 		bzip2 \
 		default-mysql-client \
 		postgresql-client \
@@ -16,7 +16,7 @@ RUN set -ex; \
 		unzip \
 		zip \
 	; \
-	apt-get install -y --no-install-recommends \
+	apt-get install -y --no-install-recommends --auto-remove \
 		g++ \
 		libcurl4-openssl-dev \
 		libfreetype6-dev \
@@ -32,12 +32,13 @@ RUN set -ex; \
 		libzip-dev \
 		unzip \
 		zlib1g-dev \
+                libonig-dev \
 	; \
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 	docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
-	docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-configure gd --with-freetype --with-jpeg; \
 	docker-php-ext-configure intl; \
-	docker-php-ext-configure zip --with-libzip; \
+	docker-php-ext-configure zip; \
 	docker-php-ext-install -j "$(nproc)" \
 		calendar \
 		gd \
