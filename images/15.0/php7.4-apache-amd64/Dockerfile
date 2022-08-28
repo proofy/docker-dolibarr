@@ -116,7 +116,7 @@ RUN set -ex; \
 	chmod +x /usr/src/dolibarr/scripts/*; \
 	echo "${DOLI_VERSION}" > /usr/src/dolibarr/.docker-image-version
 
-COPY entrypoint.sh /
+Add https://raw.githubusercontent.com/proofy/docker-dolibarr/master/images/15.0/php7.4-apache-amd64/entrypoint.sh
 RUN set -ex; \
 	chmod 755 /entrypoint.sh
 
